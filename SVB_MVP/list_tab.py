@@ -11,7 +11,12 @@ from typing import List, Tuple, Callable, Optional
 import textwrap
 import pandas as pd
 import streamlit as st
-from unidecode import unidecode
+try:
+    from unidecode import unidecode
+except ImportError:
+    # Fallback se unidecode não estiver disponível
+    def unidecode(s):
+        return s
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from PIL import Image, ImageDraw, ImageFont

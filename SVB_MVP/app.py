@@ -29,7 +29,12 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-from unidecode import unidecode
+try:
+    from unidecode import unidecode
+except ImportError:
+    # Fallback se unidecode não estiver disponível
+    def unidecode(s):
+        return s
 try:
     # Opcional: auto-refresh sem JS (pip install streamlit-autorefresh)
     from streamlit_autorefresh import st_autorefresh  # type: ignore
