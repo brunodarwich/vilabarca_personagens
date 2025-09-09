@@ -29,12 +29,35 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+
+# Import robusto do unidecode com fallback funcional
 try:
     from unidecode import unidecode
+    UNIDECODE_AVAILABLE = True
 except ImportError:
-    # Fallback se unidecode não estiver disponível
-    def unidecode(s):
-        return s
+    UNIDECODE_AVAILABLE = False
+    # Fallback simples que remove acentos básicos
+    def unidecode(text):
+        if not isinstance(text, str):
+            return str(text)
+        replacements = {
+            'á': 'a', 'à': 'a', 'ã': 'a', 'â': 'a', 'ä': 'a',
+            'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+            'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
+            'ó': 'o', 'ò': 'o', 'õ': 'o', 'ô': 'o', 'ö': 'o',
+            'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
+            'ç': 'c', 'ñ': 'n',
+            'Á': 'A', 'À': 'A', 'Ã': 'A', 'Â': 'A', 'Ä': 'A',
+            'É': 'E', 'È': 'E', 'Ê': 'E', 'Ë': 'E',
+            'Í': 'I', 'Ì': 'I', 'Î': 'I', 'Ï': 'I',
+            'Ó': 'O', 'Ò': 'O', 'Õ': 'O', 'Ô': 'O', 'Ö': 'O',
+            'Ú': 'U', 'Ù': 'U', 'Û': 'U', 'Ü': 'U',
+            'Ç': 'C', 'Ñ': 'N'
+        }
+        for accented, unaccented in replacements.items():
+            text = text.replace(accented, unaccented)
+        return text
+
 try:
     # Opcional: auto-refresh sem JS (pip install streamlit-autorefresh)
     from streamlit_autorefresh import st_autorefresh  # type: ignore

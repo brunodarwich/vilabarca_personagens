@@ -47,8 +47,10 @@ git push -u origin main
 - **ModuleNotFoundError**: Verifique se todas as dependências estão em `requirements.txt`
 - **CSV não encontrado**: Certifique-se que o arquivo está na raiz do repo
 - **Imagens não aparecem**: Verifique se a pasta `personagens/` foi incluída no commit
+- **Erro unidecode**: App agora funciona sem unidecode (fallback automático implementado)
 
 ## Observações técnicas
 - Todos os caminhos são relativos ao diretório do app (compatível com Cloud)
 - Imports robustos com fallbacks para módulos opcionais
 - Cache otimizado para performance no Cloud
+- Fallback de normalização de texto sem dependências externas
